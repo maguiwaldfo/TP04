@@ -7,8 +7,10 @@ public class SobreController : Controller
         return View();
     }
 
-    public IActionResult Abrir()
+   public IActionResult AbrirSobre()
     {
-        return View();
+        List<Jugador> sobre = BD.AbrirSobre();
+
+        return View(sobre);
     }
 }
