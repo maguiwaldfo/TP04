@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using TP04.Models;
+
 namespace TP04.Controllers;
 
 public class AlbumController : Controller
@@ -9,14 +13,14 @@ public class AlbumController : Controller
 
     public IActionResult Coleccion()
     {
-        List<Figurita> coleccion = BD.ObtenerColeccion();
+        List<Figuritas> coleccion = BD.ObtenerColeccion();
 
         return View(coleccion);
     }
 
     public IActionResult Repetidas()
     {
-        List<Figurita> repetidas = BD.ObtenerRepetidas();
+        List<Figuritas> repetidas = BD.ObtenerRepetidas();
 
         return View(repetidas);
     }
