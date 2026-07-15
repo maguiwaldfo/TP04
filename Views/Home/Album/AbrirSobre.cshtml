@@ -1,20 +1,48 @@
-<h1>Sobre</h1>
+<h1>Sobre</h1>@model List<TP04.Models.Jugador>
 
-@foreach(var jugador in ViewBag.Sobre)
-{
-    @if(figurita.Cantidad > 0)
-    {
-        <div>
-            <img src="/images/jugadores/@(jugador.IdJugador).svg" width="180">
-        </div>
-    }
-    else{
-        <div>
-            <img src="/images/jugadores/FiguritaFalta.jpg" width="180">
-        </div>
-    }
+@{
+    ViewData["Title"] = "Abrir Sobre";
 }
 
-<form action="/Sobre/ConfirmarSobre" method="post">
-    <input type="submit" value="Confirmar Sobre">
-</form>
+<div class="text-center mb-4">
+    <h1>¡Tu sobre de figuritas!</h1>
+    <p class="text-muted">Estas son las 5 figuritas que te tocaron. Confirmá para agregarlas a tu álbum.</p>
+</div>
+
+<div class="row justify-content-center g-4">
+    @foreach (var jugador in Model)
+    {
+        <div class="col-auto">
+            <div class="card shadow" style="width: 200px;">
+                @if (jugador.TieneFigurita)
+                {
+                    <img src="~/images/jugadores/@jugador.Imagen"
+                         class="card-img-top"
+                         alt="@jugador.Nombre" />
+                }
+                else
+                {
+                    <img src="~/images/jugadores/FiguritaFalta.jpg"
+                         class="card-img-top"
+                         alt="Figurita faltante" />
+                }
+                <div class="card-body text-center p-2">
+                    <h6 class="card-title mb-1">@jugador.Nombre</h6>
+                    <p class="card-text small text-muted mb-0">
+                        Numero: @jugador.Numero - @jugador.Posicion
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center mt-4">
+    <form asp-controller="Album" asp-action="ConfirmarSobre" method="post">
+        @foreach (var jugador in Model)
+        {
+            <input type="hidden" name="idsJugadores" value="@jugador.IdJugador" />
+        }
+        <button type="submit" class="btn btn-success btn-lg">Confirmar sobre</button>
+    </form>
+</div>

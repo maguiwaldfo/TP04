@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP04.Models;
 
@@ -6,29 +5,43 @@ namespace TP04.Controllers;
 
 public class AlbumController : Controller
 {
+    // Página principal del álbum: muestra todos los jugadores,
+    // marcando cuáles ya tiene el usuario en su colección.
     public IActionResult Index()
     {
-        return View();
+        List<Jugador> jugadores = BD.ObtenerJugadores();
+        List<Figuritas> coleccion = BD.ObtenerFiguritas();
+
+        foreach (var jugador in jugadores)
+        {
+            jugador.TieneFigurita = coleccion.Any(f => f.IdJugador == jugador.IdJugador);
+        }
+
+        return View(jugadores);
     }
 
-    public IActionResult Coleccion()
+    // Muestra las 5 figuritas del sobre recién abierto.
+    // Si el jugador ya está en la colección, se muestra su foto real;
+    // si es nueva, se muestra FiguritaFalta.jpg hasta que se confirme.
+    public IActionResult AbrirSobre()
     {
-        List<Figuritas> coleccion = BD.ObtenerColeccion();
+        List<Jugador> sobre = BD.AbrirSobre();
+        List<Figuritas> coleccion = BD.ObtenerFiguritas();
 
-        return View(coleccion);
+        foreach (var jugador in sobre)
+        {
+            jugador.TieneFigurita = coleccion.Any(f => f.IdJugador == jugador.IdJugador);
+        }
+
+        return View(sobre);
     }
 
-    public IActionResult Repetidas()
+    // Recibe los IDs de los jugadores que salieron en el sobre y los guarda
+    // definitivamente en la colección del usuario.
+    [HttpPost]
+    public IActionResult ConfirmarSobre(List<int> idsJugadores)
     {
-        ViewBag.Coleccion = BD.ObtenerRepetidas();
-        return View("Coleccion");
-    }
-    
-    public IActionResult VerAlbum()
-    {
-        ViewBag.Jugadores = BD.ObtenerJugadores();
-        ViewBag.Selecciones = BD.ObtenerSelecciones();
-        return View();
+        BD.ConfirmarSobre(idsJugadores);
+        return RedirectToAction("Index");
     }
 }
-
