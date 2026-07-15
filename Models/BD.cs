@@ -14,6 +14,15 @@ public static class BD
             string sql = "SELECT * FROM Jugadores";
             return db.Query<Jugador>(sql).ToList();
         }
+        foreach (Jugador j in jugadores)
+        {
+            Figuritas f = BuscarFigurita(j.IdJugador);
+
+            if (f != null)
+                j.TieneFigurita = true;
+            else
+                j.TieneFigurita = false;
+        }
     }
 
     public static List<Jugador> AbrirSobre()

@@ -20,9 +20,15 @@ public class AlbumController : Controller
 
     public IActionResult Repetidas()
     {
-        List<Figuritas> repetidas = BD.ObtenerRepetidas();
-
-        return View(repetidas);
+        ViewBag.Coleccion = BD.ObtenerRepetidas();
+        return View("Coleccion");
+    }
+    
+    public IActionResult VerAlbum()
+    {
+        ViewBag.Jugadores = BD.ObtenerJugadores();
+        ViewBag.Selecciones = BD.ObtenerSelecciones();
+        return View();
     }
 }
 

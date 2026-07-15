@@ -7,4 +7,9 @@ public class Jugador
     public string Posicion { get; set; }
     public int Numero { get; set; }
     public int IdSeleccion { get; set; }
+    public string Imagen { get; set; }
+
+    public bool TieneFigurita { get; set; }
+
+    public Seleccion Seleccion { get; set; }
 }

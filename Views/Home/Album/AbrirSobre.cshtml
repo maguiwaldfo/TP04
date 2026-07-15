@@ -1,0 +1,20 @@
+<h1>Sobre</h1>
+
+@foreach(var jugador in ViewBag.Sobre)
+{
+    @if(figurita.Cantidad > 0)
+    {
+        <div>
+            <img src="/images/jugadores/@(jugador.IdJugador).svg" width="180">
+        </div>
+    }
+    else{
+        <div>
+            <img src="/images/jugadores/FiguritaFalta.jpg" width="180">
+        </div>
+    }
+}
+
+<form action="/Sobre/ConfirmarSobre" method="post">
+    <input type="submit" value="Confirmar Sobre">
+</form>
