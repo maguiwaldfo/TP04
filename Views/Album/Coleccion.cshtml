@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Mi Colección";
+
+    List<TP04.Models.Jugador> jugadores = ViewBag.Jugadores;
+    List<TP04.Models.Figuritas> coleccion = ViewBag.Coleccion;
+
+    int total = jugadores.Count;
+    int obtenidas = jugadores.Count(j => j.TieneFigurita);
+}
+
+<h1>Mi Colección</h1>
+<p>Tenés @obtenidas de @total figuritas</p>
+
+<div>
+    @foreach (var jugador in jugadores)
+    {
+        if (jugador.TieneFigurita)
+        {
+            var figu = coleccion.FirstOrDefault(f => f.IdJugador == jugador.IdJugador);
+
+            <div style="display:inline-block; width:200px; margin:10px;">
+                <img src="~/images/Jugadores/@jugador.Imagen" width="180">
+                <p>@jugador.Nombre</p>
+                <p>Numero: @jugador.Numero - @jugador.Posicion</p>
+                @if (figu != null && figu.Cantidad > 1)
+                {
+                    <p>Tenés @figu.Cantidad repetidas</p>
+                }
+            </div>
+        }
+    }
+</div>

@@ -7,7 +7,7 @@ public static class BD
 {
     private static string _connectionString = @"Server=localhost;Database=Album;Integrated Security=True;TrustServerCertificate=True;";
 
-    // Devuelve TODOS los jugadores existentes en la base (el "catálogo" completo)
+
     public static List<Jugador> ObtenerJugadores()
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -17,7 +17,7 @@ public static class BD
         }
     }
 
-    // Devuelve las figuritas que el usuario ya tiene (su colección)
+
     public static List<Figuritas> ObtenerFiguritas()
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -27,7 +27,7 @@ public static class BD
         }
     }
 
-    // Solo las repetidas (Cantidad > 1), por si la usás en alguna otra pantalla
+
     public static List<Figuritas> ObtenerRepetidas()
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -49,7 +49,7 @@ public static class BD
         }
     }
 
-    // Elige 5 jugadores al azar de la tabla Jugadores y los devuelve (sin tocar la BD)
+
     public static List<Jugador> AbrirSobre()
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -59,14 +59,12 @@ public static class BD
         }
     }
 
-    // Recibe los IDs de los jugadores que salieron en el sobre (pueden venir repetidos
-    // si tocaron 2 figuritas del mismo jugador en el mismo sobre) y confirma la carga
-    // en Figuritas: si ya la tenía, suma la cantidad correspondiente; si no, la inserta.
+  
     public static void ConfirmarSobre(List<int> idsJugadores)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            // Agrupamos por si el mismo jugador salió más de una vez en el sobre
+ 
             var agrupados = idsJugadores
                 .GroupBy(id => id)
                 .Select(g => new { IdJugador = g.Key, Repeticiones = g.Count() });

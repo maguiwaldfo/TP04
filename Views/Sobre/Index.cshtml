@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Abrir Sobre";
+
+    List<TP04.Models.Jugador> jugadores = ViewBag.Jugadores;
+}
+
+<h1>¡Tu sobre de figuritas!</h1>
+<p>Estas son las 5 figuritas que te tocaron. Confirmá para agregarlas a tu álbum.</p>
+
+<div>
+    @foreach (var jugador in jugadores)
+    {
+        <div style="display:inline-block; width:200px; margin:10px;">
+            @if (jugador.TieneFigurita)
+            {
+                <img src="~/images/Jugadores/@jugador.Imagen" width="180">
+            }
+            else
+            {
+                <img src="~/images/Jugadores/FiguritaFalta.jpg" width="180">
+            }
+            <p>@jugador.Nombre</p>
+            <p>Numero: @jugador.Numero - @jugador.Posicion</p>
+        </div>
+    }
+</div>
+
+<div>
+    <form asp-controller="Sobre" asp-action="ConfirmarSobre" method="post">
+        @foreach (var jugador in jugadores)
+        {
+            <input type="hidden" name="idsJugadores" value="@jugador.IdJugador" />
+        }
+        <button type="submit">Confirmar sobre</button>
+    </form>
+</div>
